@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+
+<html lang="id"><head><meta charset="utf-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+<title>Halo, adinG</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Fraunces:ital,opsz,wght@0,9..144,600;1,9..144,500&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+
+<style>
+
+:root{--b:#BFDFFF;--pb:#DCEBFF;--p:#FFC8DD;--a:#FF8FB8;--cr:#FFF9FC;--ink:#3A3358;--gl:rgba(255,255,255,.6);--bo:rgba(255,255,255,.9);--bl:.9;box-sizing:border-box;padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px)}
+
+@media(prefers-color-scheme:dark){:root{--cr:#241f3d;--ink:#FFF9FC;--gl:rgba(70,60,110,.55);--bo:rgba(255,255,255,.22);--bl:.4}}
+
+*{box-sizing:border-box;margin:0}
+
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+
+body{font:500 17px/1.6 Quicksand,sans-serif;color:var(--ink);background:var(--cr);overflow-x:hidden}
+
+.lenis{height:auto}
+
+body::after{content:"";position:fixed;inset:0;pointer-events:none;opacity:.06;z-index:70;background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence baseFrequency='.8' numOctaves='2'/></filter><rect width='120' height='120' filter='url(%23n)'/></svg>")}
+
+#mesh{position:fixed;inset:0;overflow:hidden;z-index:0;opacity:var(--bl)}
+
+.blob{position:absolute;border-radius:50%;filter:blur(70px);will-change:transform}
+
+#b1{width:75vmax;height:75vmax;left:-25vmax;top:-25vmax;background:var(--b)}
+
+#b2{width:75vmax;height:75vmax;right:-25vmax;bottom:-25vmax;background:var(--p);opacity:.2}
+
+#b3{width:55vmax;height:55vmax;left:25vw;top:30vh;background:var(--pb)}
+
+.ly{position:fixed;inset:0;pointer-events:none;z-index:1}
+
+.ob{position:absolute}.fl{animation:fl var(--d,8s) ease-in-out infinite alternate}
+
+@keyframes fl{to{transform:translate3d(14px,-26px,0) rotate(14deg)}}
+
+section{position:relative;z-index:2;min-height:100vh;padding:14vh 6vw;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:34px;text-align:center}
+
+h1,h2,h3{font-family:Fraunces,serif;font-weight:600;line-height:1.05}
+
+h1{font-size:clamp(48px,13vw,150px)}h2{font-size:clamp(32px,6vw,64px);max-width:16ch}h3{font-size:clamp(22px,3vw,30px)}
+
+em{font-style:italic;color:var(--a)}
+
+.hand{font-family:Caveat,cursive;font-size:24px;color:var(--a);line-height:1.1}
+
+.ic{width:1em;height:1em;display:inline-block;flex:none}
+
+.sub{max-width:34ch;font-size:19px}
+
+.badge{position:absolute;right:6vw;top:16vh;width:clamp(90px,16vw,140px)}
+
+.badge .spin{animation:sp 14s linear infinite;color:var(--ink)}.badge span{position:absolute;inset:0;display:grid;place-items:center}
+
+.hint{position:absolute;bottom:5vh;animation:bn 1.6s ease-in-out infinite}
+
+@keyframes bn{50%{transform:translateY(10px)}}@keyframes sp{to{transform:rotate(360deg)}}
+
+.card{background:var(--gl);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid var(--bo);border-radius:36px;box-shadow:0 20px 60px rgba(255,143,184,.25),inset 0 1px 0 var(--bo);padding:28px;position:relative;overflow:hidden}
+
+.gl{position:absolute;inset:0;pointer-events:none;border-radius:inherit;opacity:0;transition:opacity .3s;z-index:4;background:radial-gradient(circle at var(--gx,50%) var(--gy,50%),rgba(255,255,255,.75),transparent 55%)}
+
+.tilt:hover .gl{opacity:.8}
+
+.btn{font:700 17px Quicksand,sans-serif;color:#3A3358;border:0;border-radius:99px;padding:16px 34px;background:linear-gradient(135deg,#fff,var(--p));box-shadow:0 10px 30px rgba(255,143,184,.4),inset 0 2px 0 #fff;cursor:pointer}
+
+.board{display:flex;flex-wrap:wrap;gap:36px;justify-content:center;max-width:1000px}
+
+.pol{width:min(240px,70vw);aspect-ratio:3/4;touch-action:pan-y;cursor:grab;transform-style:preserve-3d;position:relative}
+
+.in{position:absolute;inset:0;transform-style:preserve-3d}
+
+.fr,.bk{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:14px;background:#FFF9FC;color:#3A3358;padding:12px;box-shadow:0 14px 40px rgba(58,51,88,.2);display:flex;flex-direction:column;gap:8px;text-align:center}
+
+.bk{transform:rotateY(180deg);justify-content:center;align-items:center;padding:22px;background:linear-gradient(160deg,#FFF9FC,var(--p))}
+
+.ph{flex:1;border-radius:8px;background:linear-gradient(150deg,var(--b),var(--p));display:grid;place-items:center;overflow:hidden}.ph img{width:100%;height:100%;object-fit:cover}
+
+.pol::before{content:"";position:absolute;top:-12px;left:50%;width:84px;height:26px;margin-left:-42px;background:rgba(255,200,221,.8);transform:rotate(-4deg);z-index:3;border-radius:3px}
+
+#qzc{width:min(560px,90vw)}.ans{display:grid;gap:12px;margin-top:20px;grid-template-columns:repeat(auto-fit,minmax(140px,1fr))}
+
+.bub.ok{background:linear-gradient(135deg,var(--b),#fff)}.bub.no{background:linear-gradient(135deg,#ffd9e4,#fff);opacity:.7}
+
+.rb{position:relative;height:14px;width:min(520px,80vw);border-radius:9px;background:var(--gl);border:1px solid var(--bo)}
+
+#fill{position:absolute;inset:0;border-radius:9px;background:linear-gradient(90deg,var(--b),var(--a));transform:scaleX(0);transform-origin:left;transition:transform .6s}
+
+#bw{position:absolute;left:-17px;top:-12px;transition:transform .6s}
+
+#hs{padding:10vh 0 0;overflow:hidden}
+
+#trk{display:flex;gap:40px;padding:0 10vw;width:max-content;align-items:center}
+
+.gc{width:min(78vw,370px);min-height:410px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;flex:none}
+
+.vin{width:150px;animation:sp 3s linear infinite}.eq{display:flex;gap:6px;align-items:flex-end;height:34px}
+
+.eq i{width:7px;height:100%;border-radius:4px;background:var(--a);transform-origin:bottom;animation:eq 1s ease-in-out infinite}
+
+.eq i:nth-child(even){background:var(--b)}.eq i:nth-child(2){animation-delay:-.3s}.eq i:nth-child(3){animation-delay:-.6s}.eq i:nth-child(4){animation-delay:-.15s}.eq i:nth-child(5){animation-delay:-.8s}
+
+@keyframes eq{50%{transform:scaleY(.2)}}
+
+#ck{list-style:none;display:grid;gap:14px;width:min(460px,88vw);padding:0}
+
+.it{display:flex;gap:16px;align-items:center;padding:20px 24px;cursor:pointer;text-align:left;border-radius:30px}
+
+.bx{width:34px;height:34px;border-radius:50%;border:2px solid var(--a);display:grid;place-items:center;flex:none;transition:background .3s}
+
+.bx svg{width:20px;stroke:#fff;fill:none;stroke-width:3;stroke-linecap:round;stroke-dasharray:24;stroke-dashoffset:24;transition:stroke-dashoffset .4s}
+
+.on .bx{background:var(--a)}.on .bx svg{stroke-dashoffset:0}
+
+.tt{position:relative;transition:opacity .3s}.tt::after{content:"";position:absolute;left:0;right:0;top:52%;height:2px;background:var(--a);transform:scaleX(0);transform-origin:left;transition:transform .45s}
+
+.on .tt{opacity:.55}.on .tt::after{transform:scaleX(1)}
+
+.mt{position:relative;width:150px;height:150px;border-radius:50%;overflow:hidden;border:2px solid #fff;background:var(--gl);display:grid;place-items:center;font:600 30px Fraunces,serif;box-shadow:0 0 50px rgba(255,143,184,.35)}
+
+#lq{position:absolute;inset:0;background:linear-gradient(180deg,var(--p),var(--a));opacity:.85;transform:translateY(100%);transition:transform 1s cubic-bezier(.3,1.4,.5,1)}#cnt{position:relative}
+
+.row{display:flex;gap:16px;flex-wrap:wrap;justify-content:center}
+
+#msg{min-height:30px;font-size:20px}
+
+#cv{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:80}
+
+#pg{position:fixed;top:env(safe-area-inset-top,0px);left:0;right:0;height:8px;z-index:60;pointer-events:none}
+
+#pf{height:100%;background:linear-gradient(90deg,var(--b),var(--p),var(--a));transform-origin:left;transform:scaleX(0);border-radius:0 8px 8px 0}
+
+#pm{position:absolute;top:-9px;left:-14px}
+
+#bfl{position:fixed;inset:0;width:100%;height:100%;z-index:1;pointer-events:none}
+
+#bf{position:fixed;left:0;top:0;z-index:3;pointer-events:none}.flap{animation:fp .35s ease-in-out infinite alternate}@keyframes fp{to{transform:scaleX(.5)}}
+
+#logo{position:fixed;left:16px;top:calc(env(safe-area-inset-top,0px) + 18px);z-index:61;background:none;border:0;padding:0;cursor:pointer}
+
+#mu{position:fixed;right:16px;bottom:calc(env(safe-area-inset-bottom,0px) + 16px);z-index:61;width:50px;height:50px;padding:0;display:grid;place-items:center}
+
+#mu .sl{transition:opacity .3s}#mu.on .sl{opacity:0}
+
+#toast{position:fixed;left:0;right:0;margin:0 auto;bottom:90px;z-index:95;width:min(86vw,420px);text-align:center;opacity:0;pointer-events:none}
+
+#ld{position:fixed;inset:0;z-index:100;background:var(--cr);display:grid;place-items:center}
+
+.rp{position:fixed;width:30px;height:30px;margin:-15px;border-radius:50%;border:2px solid var(--a);pointer-events:none;z-index:85}
+
+#dot,#ring,#glow{position:fixed;left:0;top:0;pointer-events:none;display:none}
+
+.fc #dot,.fc #ring,.fc #glow{display:block}.fc,.fc *{cursor:none!important}
+
+#dot{width:10px;height:10px;margin:-5px;border-radius:50%;background:var(--a);z-index:90}
+
+#ring{z-index:89}
+
+#ring.lihat .ri{transform:scale(1.9);background:rgba(255,200,221,.35)}#ring.klik .ri{transform:scale(.8)}#ring.tx .ri{transform:scale(1.4);background:rgba(255,200,221,.28);border-color:transparent}
+
+#rl{position:absolute;transform:translate(-50%,-50%);font:700 12px Quicksand;color:var(--ink);opacity:0;transition:opacity .2s;display:flex;flex-direction:column;align-items:center;line-height:1}
+
+.lihat #rl,.klik #rl{opacity:1}
+
+#glow{width:520px;height:520px;margin:-260px;border-radius:50%;z-index:1;background:radial-gradient(circle,rgba(255,143,184,.25),rgba(191,223,255,.18) 45%,transparent 70%)}
+
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}#hs{overflow-x:auto}}
+
+
+/* ===== PHOTO DUMP / SCRAPBOOK ===== */
+#dump{min-height:auto;padding:13vh 5vw 16vh;gap:28px;overflow:hidden}
+.dump-head{max-width:720px;position:relative}
+.dump-kicker{font:500 25px Caveat,cursive;color:var(--a);margin-bottom:10px}
+.dump-sub{max-width:38ch;font-size:15px;margin:16px auto 0;opacity:.8}
+#dumpGrid{width:min(1000px,100%);display:grid;grid-template-columns:repeat(12,minmax(0,1fr));grid-auto-rows:30px;gap:12px;align-items:stretch;position:relative}
+.dump-tile{position:relative;background:#fff9fc;padding:9px 9px 34px;border-radius:5px;box-shadow:0 12px 28px rgba(58,51,88,.16);transform:rotate(var(--rot,-2deg));transition:transform .3s,box-shadow .3s;min-width:0;grid-column:span 4;grid-row:span 7}
+.dump-tile:nth-child(5n+1){grid-column:span 5;grid-row:span 9;--rot:-3deg}
+.dump-tile:nth-child(5n+2){grid-column:span 3;grid-row:span 6;--rot:2.5deg}
+.dump-tile:nth-child(5n+3){grid-column:span 4;grid-row:span 8;--rot:1.5deg}
+.dump-tile:nth-child(5n+4){grid-column:span 3;grid-row:span 7;--rot:-2deg}
+.dump-tile:nth-child(5n){grid-column:span 5;grid-row:span 7;--rot:2deg}
+.dump-tile:hover{transform:rotate(0) translateY(-5px) scale(1.015);z-index:4;box-shadow:0 20px 36px rgba(58,51,88,.23)}
+.dump-photo{width:100%;height:100%;display:block;object-fit:cover;background:linear-gradient(145deg,#dceBff,#ffc8dd);border-radius:2px;min-height:0}
+.dump-caption{position:absolute;bottom:7px;left:10px;right:10px;color:#3A3358;font:500 19px Caveat,cursive;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:center}
+.dump-pin{position:absolute;top:-10px;left:calc(50% - 31px);width:62px;height:19px;background:rgba(255,200,221,.83);transform:rotate(-4deg);box-shadow:0 2px 5px #3a33581a}
+.dump-doodle{width:min(740px,94vw);height:auto;overflow:visible;opacity:.85;margin:-6px 0 -8px}
+.dump-note{font:500 22px Caveat,cursive;color:var(--a)}
+@media(max-width:640px){#dump{padding:11vh 5vw;gap:22px}#dumpGrid{grid-template-columns:repeat(6,minmax(0,1fr));grid-auto-rows:25px;gap:9px}.dump-tile{padding:6px 6px 29px}.dump-tile:nth-child(5n+1){grid-column:span 4;grid-row:span 8}.dump-tile:nth-child(5n+2){grid-column:span 2;grid-row:span 6}.dump-tile:nth-child(5n+3){grid-column:span 3;grid-row:span 7}.dump-tile:nth-child(5n+4){grid-column:span 3;grid-row:span 6}.dump-tile:nth-child(5n){grid-column:span 4;grid-row:span 7}.dump-caption{font-size:16px;bottom:5px}.dump-remove{opacity:1;width:24px;height:24px;top:8px;right:8px}}
+
+</style></head><body>
+
+<svg width="0" height="0" style="position:absolute"><defs>
+
+<radialGradient id="bg" cx=".3" cy=".3" r=".8"><stop offset="0" stop-color="#fff" stop-opacity=".95"/><stop offset=".45" stop-color="#DCEBFF" stop-opacity=".5"/><stop offset="1" stop-color="#FFC8DD" stop-opacity=".55"/></radialGradient>
+
+<linearGradient id="pgd" x1="0" x2="1"><stop offset="0" stop-color="#BFDFFF"/><stop offset="1" stop-color="#FF8FB8"/></linearGradient>
+
+<symbol id="bubble" viewBox="0 0 40 40"><circle cx="20" cy="20" r="18" fill="url(#bg)" stroke="#fff" stroke-width="1.2"/><ellipse cx="13" cy="12" rx="5" ry="3" fill="#fff" opacity=".9" transform="rotate(-35 13 12)"/></symbol>
+
+<symbol id="spark" viewBox="0 0 40 40"><path d="M20 1Q22 18 39 20Q22 22 20 39Q18 22 1 20Q18 18 20 1Z" fill="currentColor"/></symbol>
+
+<symbol id="star" viewBox="0 0 40 40"><path d="M20 3l5 11 12 1.5-9 8 2.5 12L20 29.5 9.5 35.5 12 23.5 3 15.5 15 14z" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+
+<symbol id="cloud" viewBox="0 0 80 40"><path d="M16 36a12 12 0 010-24 16 16 0 0130-3 14 14 0 0120 13 11 11 0 01-2 14z" fill="currentColor"/></symbol>
+
+<symbol id="daisy" viewBox="0 0 40 40"><g fill="#fff" stroke="#FFC8DD" stroke-width=".7"><ellipse cx="20" cy="9" rx="4.5" ry="8"/><ellipse cx="20" cy="9" rx="4.5" ry="8" transform="rotate(60 20 20)"/><ellipse cx="20" cy="9" rx="4.5" ry="8" transform="rotate(120 20 20)"/><ellipse cx="20" cy="9" rx="4.5" ry="8" transform="rotate(180 20 20)"/><ellipse cx="20" cy="9" rx="4.5" ry="8" transform="rotate(240 20 20)"/><ellipse cx="20" cy="9" rx="4.5" ry="8" transform="rotate(300 20 20)"/></g><circle cx="20" cy="20" r="4.5" fill="#FF8FB8"/></symbol>
+
+<symbol id="bow" viewBox="0 0 40 40"><path d="M20 20C10 7 1 12 4 21c2 8 11 4 16-1zM20 20c10-13 19-8 16 1-3 8-11 3-16-1z" fill="currentColor"/><circle cx="20" cy="20" r="4" fill="currentColor" stroke="#fff" stroke-width="1.5"/></symbol>
+
+<symbol id="heart" viewBox="0 0 40 40"><path d="M20 35C4 24 4 10 13 9c4 0 7 3 7 6 0-3 3-6 7-6 9 1 9 15-7 26z" fill="currentColor"/></symbol>
+
+<symbol id="butterfly" viewBox="0 0 50 40"><path d="M25 20C18 2 2 4 5 16c2 8 12 8 20 4zM25 20c7-18 23-16 20-4-2 8-12 8-20 4zM25 20C14 22 8 38 18 36c6-1 8-9 7-16zM25 20c11 2 17 18 7 16-6-1-8-9-7-16z" fill="currentColor" opacity=".9"/><path d="M25 12v18" stroke="#3A3358" stroke-width="1.6" stroke-linecap="round"/></symbol>
+
+</defs></svg>
+
+<div id="mesh"><i class="blob" id="b1"></i><i class="blob" id="b2"></i><i class="blob" id="b3"></i></div>
+
+<svg id="bfl" viewBox="0 0 1000 1000" preserveAspectRatio="none"><path id="bp" d="M80 90C300 110 180 300 480 290S820 400 720 600 280 700 500 930" fill="none" stroke="url(#pgd)" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke" opacity=".6"/></svg>
+
+<div id="bf"><div class="flap" id="bfi"></div></div>
+
+<div id="pg"><div id="pf"></div><span id="pm"></span></div>
+
+<button id="logo" aria-label="logo"></button>
+
+<button id="mu" class="btn mg" aria-label="musik"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#3A3358" stroke-width="2" stroke-linecap="round"><path d="M9 18V6l10-2v12"/><circle cx="7" cy="18" r="2.5"/><circle cx="17" cy="16" r="2.5"/><path class="sl" d="M3 3l18 18" stroke="#FF8FB8"/></svg></button>
+
+<div id="toast" class="card"></div>
+
+<div id="ld"><svg id="lb" class="ic" style="font-size:120px"><use href="#bubble"/></svg></div>
+
+<canvas id="cv"></canvas><div id="glow"></div><div id="dot"></div><div id="ring"><div class="ri"></div><div id="rl"></div></div>
+
+<main>
+
+<section id="hero"><div id="bd" class="hh badge"></div>
+
+<h1><span style="font-size:.4em;font-style:italic;font-weight:500">Halo,</span><br><span id="nm"></span></h1>
+
+<p id="sub" class="hh sub"></p>
+
+<div class="hint hh hand">scroll pelan-pelan</div></section>
+
+<section id="s2"><header class="rv"><p class="hand">catatan kecil</p><h2>Hal-hal random yang aku <em>notice</em></h2></header>
+
+<div class="board rv" id="bd2"></div><p class="hand">klik kartunya buat lihat catatan, geser juga boleh</p></section>
+
+<section id="s3"><header class="rv"><p class="hand">sekali-sekali</p><h2>Seberapa kenal kamu <em>sama aku?</em></h2></header>
+
+<div class="rb"><div id="fill"></div><span id="bw"></span></div>
+
+<div class="card tilt" id="qzc"><div class="gl"></div><div id="qz"></div></div></section>
+
+<section id="hs"><header class="rv"><p class="hand">geser terus</p><h2>Kalau lagi gabut, aku suka<em>...</em></h2></header><div id="trk"></div></section>
+
+
+<section id="dump" aria-labelledby="dumpTitle">
+  <header class="dump-head rv">
+    <p class="dump-kicker">little moments, kept here ♡</p>
+    <h2 id="dumpTitle">A little <em>photo dump</em></h2>
+    <p class="dump-sub">Potongan kecil tentang kamu dan momen-momen yang sayang kalau cuma lewat ✧</p>
+  </header>
+  <svg class="dump-doodle" viewBox="0 0 740 70" role="img" aria-label="Garis doodle hati dan bintang dekoratif">
+    <path d="M12 38 C80 8 122 65 188 35 S292 13 346 38 S449 63 510 32 S624 14 728 38" fill="none" stroke="#BFDFFF" stroke-width="2" stroke-linecap="round" stroke-dasharray="3 8"/>
+    <path d="M370 13 C355 -2 335 17 370 43 C405 17 385 -2 370 13Z" fill="#FF8FB8" opacity=".9"/>
+    <path d="M103 18l4 10 10 4-10 4-4 10-4-10-10-4 10-4z M625 13l3 8 8 3-8 3-3 8-3-8-8-3 8-3z" fill="#FFC8DD" stroke="#FF8FB8" stroke-width="1"/>
+    <circle cx="240" cy="52" r="3" fill="#FF8FB8"/><circle cx="496" cy="18" r="3" fill="#BFDFFF"/>
+  </svg>
+  <!-- EDIT FOTO MANUAL: ganti src dengan lokasi foto kamu, misalnya images/foto1.jpg -->
+  <div id="dumpGrid" class="rv">
+    <figure class="dump-tile">
+      <span class="dump-pin" aria-hidden="true"></span>
+      <img class="dump-photo" src="ag4.jpeg" alt="Foto kenangan pertama">
+      <figcaption class="dump-caption">mbg</figcaption>
+    </figure>
+    <figure class="dump-tile">
+      <span class="dump-pin" aria-hidden="true"></span>
+      <img class="dump-photo" src="ag5.jpeg" alt="Foto kenangan kedua">
+      <figcaption class="dump-caption">a little sunshine</figcaption>
+    </figure>
+    <figure class="dump-tile">
+      <span class="dump-pin" aria-hidden="true"></span>
+      <img class="dump-photo" src="ag3.jpeg" alt="Foto kenangan ketiga">
+      <figcaption class="dump-caption">you look so cute ✿</figcaption>
+    </figure>
+    <figure class="dump-tile">
+      <span class="dump-pin" aria-hidden="true"></span>
+      <img class="dump-photo" src="ag6.jpeg" alt="Foto kenangan keempat">
+      <figcaption class="dump-caption">random but precious ♡</figcaption>
+    </figure>
+    <figure class="dump-tile">
+      <span class="dump-pin" aria-hidden="true"></span>
+      <img class="dump-photo" src="ag7.jpeg" alt="Foto kenangan kelima">
+      <figcaption class="dump-caption">this day, this you</figcaption>
+    </figure>
+    <figure class="dump-tile">
+      <span class="dump-pin" aria-hidden="true"></span>
+      <img class="dump-photo" src="ag9.jpeg" alt="Foto kenangan keenam">
+      <figcaption class="dump-caption">kept in my rawr</figcaption>
+    </figure>
+  </div>
+  <p class="dump-note rv">not a perfect feed, just us ✿</p>
+</section>
+
+<section id="s5"><header class="rv"><p class="hand">kalau kamu mau</p><h2>Next time kita <em>coba?</em></h2></header>
+
+<ul id="ck"></ul><div class="mt"><div id="lq"></div><span id="cnt">0/3</span></div></section>
+
+<section id="s6"><header class="rv"><h2>Mau<em>diajak keluar ga kamu?.</em></h2></header>
+
+<div class="row rv"><button class="btn mg" id="c1">Gas</button><button class="btn mg" id="c2">Boleh, kapan?</button></div><p id="msg" class="hand"></p></section>
+
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+
+<script>
+
+/* ===== CONFIG: semua teks & foto ada di sini (foto: isi URL / data URI, null = placeholder) ===== */
+
+const CONFIG={name:"adinG",
+
+hero:"Aku bikin web ini karena kamu rawr & worth documenting aj.",
+
+photos:[null,null,null,null,null,null],
+
+notes:[["Cara kamu ketawa","Receh, tapi i like."],["Gaya chat kamu","Kadang kngen, kadang rawr."],["Selera lagu kamu","lagu-lagu kis, hehe."],["Kamu yang random","tpi gweh lebih random ror."],["Senyum kamu","Kecil, tapi nular, anjai."],["Cara kamu peduli","ndada peduli-pedulinya anjai, bot."]],
+
+quiz:[{q:"Aku lebih suka pagi atau malam?",a:["Pagi banget","Siang","Sore","Malam"],c:4},{q:"Minuman andalan aku?",a:["Butterscotch","Americano","Gula Aren","Kopi Susu"],c:2},{q:"Liburan impian aku?",a:["Gunung","Pantai","Pulau","Jalan-jalan kota baru"],c:4},{q:"Film yang sering aku tonton ulang?",a:["Dracin","Drakor","Draind","Netflix & Chill"],c:4},{q:"Kalau gabut aku biasanya...",a:["Belajar Ekobis","Scroll","Belajar Akuntansi","Belajar anu"],c:2}],
+
+gabut:[{k:"makanan",t:"Mie Goreng rawr",s:"lombok 1 biji, nggak kuat lebih"},{k:"lagu",t:"So Far Away",s:"A7X"},{k:"tempat",t:"Tempat baru",s:"yg blum ku eksplor, ror"}],
+
+next:["Berenang","Jogging","Mendaki"],
+
+end:{gas:"Oke, nanti aku kabarin ya.",kapan:"Kamu yang pilih harinya, aku nanti menyesuaikan."},
+
+secret:"Rahasia kecil: aku senang ngobrol sama kamu. Itu aja sih."};
+
+/* ===== helpers ===== */
+
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+
+const RM=matchMedia('(prefers-reduced-motion:reduce)').matches,fine=matchMedia('(pointer:fine)').matches;
+
+const S=(id,c='var(--a)',z='1em')=>`<svg class="ic" style="color:${c};font-size:${z}"><use href="#${id}"/></svg>`;
+
+const N=CONFIG.name;gsap.registerPlugin(ScrollTrigger);
+
+document.title='Halo, '+N;
+
+/* ===== content ===== */
+
+$('#nm').innerHTML=[...N].map(c=>`<span class="lt" style="display:inline-block">${c}</span>`).join('');
+
+$('#sub').textContent=CONFIG.hero;
+
+$('#bd').innerHTML=`<svg viewBox="0 0 120 120" class="spin"><defs><path id="cp" d="M60 60m-46 0a46 46 0 1 1 92 0a46 46 0 1 1-92 0"/></defs><text font-family="Quicksand" font-weight="700" font-size="11" fill="currentColor" textLength="284"><textPath href="#cp">for ${N} only ✦ for ${N} only ✦ </textPath></text></svg><span>${S('bow','var(--a)','34px')}</span>`;
+
+$('#logo').innerHTML=S('bow','var(--a)','36px');$('#bw').innerHTML=S('bow','var(--a)','34px');$('#pm').innerHTML=S('butterfly','var(--a)','26px');$('#bfi').innerHTML=S('butterfly','var(--a)','40px');
+
+const rot=[-5,4,-3,6,-6,3],ico=['daisy','star','bow','cloud','heart','bubble'];
+
+$('#bd2').innerHTML=CONFIG.notes.map((n,i)=>`<div class="pol tilt" data-c="lihat"><div class="in"><div class="fr"><div class="ph">${CONFIG.photos[i]?`<img src="${CONFIG.photos[i]}" alt="">`:S(ico[i],'#fff','72px')}</div><p class="hand">${n[0]}</p></div><div class="bk"><p class="hand">${n[0]}</p><p>${n[1]}</p></div></div><div class="gl"></div></div>`).join('');
+
+const vin=`<svg viewBox="0 0 100 100" class="vin"><circle cx="50" cy="50" r="48" fill="#3A3358"/><circle cx="50" cy="50" r="36" fill="none" stroke="#fff" stroke-opacity=".15"/><circle cx="50" cy="50" r="28" fill="none" stroke="#fff" stroke-opacity=".12"/><circle cx="50" cy="50" r="17" fill="#FF8FB8"/><circle cx="50" cy="50" r="3" fill="#FFF9FC"/><path d="M50 3a47 47 0 0 1 40 22" stroke="#fff" stroke-opacity=".5" stroke-width="3" fill="none" stroke-linecap="round"/></svg><div class="eq"><i></i><i></i><i></i><i></i><i></i></div>`;
+
+const gi={makanan:'daisy',tempat:'star'};
+
+$('#trk').innerHTML=CONFIG.gabut.map(g=>`<div class="card gc tilt" data-c="lihat"><div class="gl"></div><p class="hand">${g.k}</p>${g.k=='lagu'?vin:S(gi[g.k]||'bow','var(--a)','110px')}<h3>${g.t}</h3><p>${g.s}</p></div>`).join('');
+
+$('#ck').innerHTML=CONFIG.next.map(t=>`<li class="card it tilt" data-c="klik"><div class="gl"></div><span class="bx"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="tt">${t}</span></li>`).join('');
+
+$('#cnt').textContent='0/'+CONFIG.next.length;
+
+$$('h2').forEach(h=>h.classList.add('sk'));
+
+/* ===== particles (canvas) ===== */
+
+const cv=$('#cv'),cx=cv.getContext('2d'),dpr=Math.min(devicePixelRatio||1,1.5),COL=['#FFC8DD','#FF8FB8','#BFDFFF','#DCEBFF','#fff'];let P=[],run=0;
+
+const rs=()=>{cv.width=innerWidth*dpr;cv.height=innerHeight*dpr};rs();addEventListener('resize',rs);
+
+function add(x,y,o){P.push({x,y,vx:o.vx,vy:o.vy,g:o.g||0,r:o.r,rot:Math.random()*6,vr:(Math.random()-.5)*.2,t:0,l:o.l,k:o.k,c:COL[Math.random()*5|0]});if(!run){run=1;gsap.ticker.add(draw)}}
+
+function burst(x,y,n=14,o={}){for(let i=0;i<n;i++){const a=Math.random()*6.283,s=(o.s||5)*(.4+Math.random());add(x,y,{vx:Math.cos(a)*s,vy:Math.sin(a)*s-(o.up||1),g:o.g??.12,r:5+Math.random()*8,l:o.l||1.1,k:o.k??Math.random()*6|0})}}
+
+const confetti=(x,y)=>burst(x,y,38,{s:9,up:5,g:.22,l:2});
+
+function draw(t,dt){cx.setTransform(dpr,0,0,dpr,0,0);cx.clearRect(0,0,innerWidth,innerHeight);P=P.filter(p=>p.t<p.l);if(!P.length){run=0;gsap.ticker.remove(draw);return}
+
+const d=Math.min(dt,50)/16.7;for(const p of P){p.t+=dt/1000;p.vy+=p.g*d;p.x+=p.vx*d;p.y+=p.vy*d;p.rot+=p.vr*d;const r=p.r;cx.save();cx.globalAlpha=Math.min(1,(1-p.t/p.l)*2);cx.translate(p.x,p.y);cx.rotate(p.rot);cx.fillStyle=cx.strokeStyle=p.c;cx.beginPath();
+
+if(p.k==0||p.k==3){const n=p.k?4:5,i=p.k?r*.28:r*.45;for(let j=0;j<n*2;j++){const a=j*Math.PI/n-Math.PI/2,q=j%2?i:r;cx.lineTo(Math.cos(a)*q,Math.sin(a)*q)}cx.closePath();cx.fill()}
+
+else if(p.k==1){cx.arc(0,0,r,0,6.283);cx.lineWidth=1.5;cx.stroke();cx.fillStyle='rgba(255,255,255,.55)';cx.fill()}
+
+else if(p.k==2){cx.ellipse(0,0,r,r*.5,0,0,6.283);cx.fill()}
+
+else if(p.k==5){for(let j=0;j<6;j++){cx.rotate(1.047);cx.beginPath();cx.ellipse(r*.55,0,r*.55,r*.3,0,0,6.283);cx.fill()}cx.fillStyle='#FF8FB8';cx.beginPath();cx.arc(0,0,r*.28,0,6.283);cx.fill()}
+
+else cx.fillRect(-r/2,-r/3,r,r*.6);cx.restore()}}
+
+function rain(){let n=0;const iv=setInterval(()=>{for(let i=0;i<3;i++)add(Math.random()*innerWidth,-20,{vx:Math.random()-.5,vy:2+Math.random()*2,g:.02,r:10+Math.random()*10,l:5,k:[0,5,5,2,3][Math.random()*5|0]});if(++n>70)clearInterval(iv)},50)}
+
+function toast(t){const e=$('#toast');gsap.killTweensOf(e);e.textContent=t;gsap.timeline().fromTo(e,{y:30,opacity:0},{y:0,opacity:1,duration:.5,ease:'back.out(2)'}).to(e,{opacity:0,duration:.6},'+=4')}
+
+/* ===== sound ===== */
+
+let ac,mi,on=0;const nt=[523.25,587.33,659.25,783.99,880,1046.5];
+
+function tone(f,d,g){const o=ac.createOscillator(),G=ac.createGain();o.frequency.value=f;G.gain.setValueAtTime(g,ac.currentTime);G.gain.exponentialRampToValueAtTime(.0001,ac.currentTime+d);o.connect(G).connect(ac.destination);o.start();o.stop(ac.currentTime+d)}
+
+function pop(){if(!on)return;const o=ac.createOscillator(),G=ac.createGain(),T=ac.currentTime;o.frequency.setValueAtTime(700,T);o.frequency.exponentialRampToValueAtTime(220,T+.09);G.gain.setValueAtTime(.12,T);G.gain.exponentialRampToValueAtTime(.0001,T+.12);o.connect(G).connect(ac.destination);o.start();o.stop(T+.13)}
+
+$('#mu').onclick=()=>{on^=1;if(on){ac=ac||new AudioContext();ac.resume();mi=setInterval(()=>tone(nt[Math.random()*6|0],2.2,.035),700)}else clearInterval(mi);$('#mu').classList.toggle('on',!!on)};
+
+/* ===== interactions ===== */
+
+addEventListener('pointerdown',e=>{burst(e.clientX,e.clientY,12,{s:5});pop();if(e.pointerType!='mouse'){const r=document.createElement('i');r.className='rp';r.style.left=e.clientX+'px';r.style.top=e.clientY+'px';document.body.append(r);gsap.fromTo(r,{scale:.3,opacity:.8},{scale:3,opacity:0,duration:.7,onComplete:()=>r.remove()})}
+
+const m=e.target.closest('.mg');if(m)gsap.to(m,{scaleX:.9,scaleY:.84,duration:.1})});
+
+const rel=()=>$$('.mg').forEach(m=>gsap.to(m,{scale:1,duration:.6,ease:'elastic.out(1,.4)',overwrite:'auto'}));addEventListener('pointerup',rel);addEventListener('pointercancel',rel);
+
+let mg=null;document.addEventListener('pointermove',e=>{const m=e.target.closest&&e.target.closest('.mg');if(mg&&mg!==m)gsap.to(mg,{x:0,y:0,duration:.7,ease:'elastic.out(1,.4)'});mg=m;if(m&&e.pointerType=='mouse'){const r=m.getBoundingClientRect();gsap.to(m,{x:(e.clientX-r.left-r.width/2)*.3,y:(e.clientY-r.top-r.height/2)*.3,duration:.3})}});
+
+$$('.tilt').forEach(e=>{e.addEventListener('pointermove',ev=>{if(ev.pointerType!='mouse'||RM)return;const r=e.getBoundingClientRect(),x=(ev.clientX-r.left)/r.width,y=(ev.clientY-r.top)/r.height;gsap.to(e,{rotationY:(x-.5)*16,rotationX:(.5-y)*16,transformPerspective:800,duration:.35});e.style.setProperty('--gx',x*100+'%');e.style.setProperty('--gy',y*100+'%')});e.addEventListener('pointerleave',()=>gsap.to(e,{rotationX:0,rotationY:0,duration:.6,ease:'power3.out'}))});
+
+$$('.pol').forEach((c,i)=>{gsap.set(c,{rotation:rot[i]});let sx,sy,ox=0,oy=0,mv=0,dn=0,fl=0;
+
+c.onpointerdown=e=>{dn=1;mv=0;sx=e.clientX;sy=e.clientY;c.setPointerCapture(e.pointerId);c.style.zIndex=9};
+
+c.onpointermove=e=>{if(!dn)return;const dx=e.clientX-sx,dy=e.clientY-sy;if(Math.hypot(dx,dy)>6)mv=1;if(mv)gsap.set(c,{x:ox+dx,y:oy+dy})};
+
+c.onpointerup=()=>{if(!dn)return;dn=0;if(mv){ox=gsap.getProperty(c,'x');oy=gsap.getProperty(c,'y')}else{fl^=1;gsap.to(c.querySelector('.in'),{rotationY:fl*180,duration:.7,ease:'back.out(1.4)'})}}});
+
+$('#nm').onmouseenter=()=>{const cl=['#FF8FB8','#7FB8F5','#FFC8DD'];gsap.to('.lt',{y:-18,color:i=>cl[i%3],duration:.28,stagger:.05,repeat:1,yoyo:true,ease:'power2.out'})};
+
+/* quiz */
+
+const Q=CONFIG.quiz,n=Q.length;let qi=0,sc=0;
+
+const prog=()=>{$('#fill').style.transform=`scaleX(${qi/n})`;$('#bw').style.transform=`translateX(${qi/n*$('.rb').clientWidth}px)`};
+
+function rq(){const q=Q[qi];$('#qz').innerHTML=`<p class="hand">pertanyaan ${qi+1} dari ${n}</p><h3>${q.q}</h3><div class="ans">${q.a.map((a,i)=>`<button class="btn mg bub" data-i="${i}">${a}</button>`).join('')}</div>`;gsap.from('#qz h3,#qz .bub',{y:16,opacity:0,stagger:.05,duration:.5});prog()}
+
+function res(){qi=n;prog();const k=sc>=n-1?0:sc>=Math.ceil(n/2)?1:2,T=['Wah, kamu perhatian juga ya','Lumayan kenal nih, lulus kok','Masih banyak yang perlu kamu cari tau, yuk ngobrol lagi'];
+
+$('#qz').innerHTML=`<div>${S(['star','bow','daisy'][k],'var(--a)','90px')}</div><p class="hand">skor kamu ${sc}/${n}</p><h3>${T[k]}</h3><br><button class="btn mg" id="rs">Coba lagi</button>`;gsap.from('#qz>*',{scale:.6,opacity:0,stagger:.1,ease:'back.out(2)'});if(k<2)confetti(innerWidth/2,innerHeight/2);$('#rs').onclick=()=>{qi=0;sc=0;rq()}}
+
+$('#qz').onclick=e=>{const b=e.target.closest('.bub');if(!b||b.disabled)return;const ok=+b.dataset.i===Q[qi].c;$$('#qz .bub').forEach(x=>x.disabled=true);b.classList.add(ok?'ok':'no');if(ok){sc++;const r=b.getBoundingClientRect();confetti(r.left+r.width/2,r.top+r.height/2)}else gsap.fromTo(b,{x:-8},{x:0,duration:.5,ease:'elastic.out(1,.2)'});setTimeout(()=>++qi<n?rq():res(),1000)};
+
+rq();
+
+/* checklist */
+
+$('#ck').onclick=e=>{const li=e.target.closest('.it');if(!li)return;li.classList.toggle('on');const d=$$('.it.on').length,t=CONFIG.next.length;if(li.classList.contains('on')){const r=li.querySelector('.bx').getBoundingClientRect();burst(r.left+17,r.top+17,16,{k:3,s:5,g:.05,l:1})}$('#lq').style.transform=`translateY(${(1-d/t)*100}%)`;$('#cnt').textContent=d+'/'+t};
+
+/* closing */
+
+function done(e,t){const r=e.currentTarget.getBoundingClientRect();confetti(r.left+r.width/2,r.top);const m=$('#msg');m.textContent=t;gsap.fromTo(m,{y:20,opacity:0},{y:0,opacity:1,duration:.6,ease:'back.out(2)'})}
+
+$('#c1').onclick=e=>done(e,CONFIG.end.gas);$('#c2').onclick=e=>done(e,CONFIG.end.kapan);
+
+let lc=0,lt;$('#logo').onclick=()=>{lc++;clearTimeout(lt);lt=setTimeout(()=>lc=0,1200);if(lc>=3){lc=0;rain();toast(CONFIG.secret)}};
+
+/* cursor context */
+
+const ring=$('#ring'),rl=$('#rl');
+
+if(fine&&!RM){document.body.classList.add('fc');document.addEventListener('pointerover',e=>{const t=e.target.closest('[data-c],.btn')||e.target.closest('p,h2,h3');let c='';if(t)c=t.dataset.c||(t.matches('.btn')?'klik':'tx');ring.className=c;rl.innerHTML=c=='klik'?S('bow','var(--a)','16px')+'klik':c=='lihat'?'lihat':''})}
+
+/* ===== scroll: lenis, reveals, pin, mesh ===== */
+
+let ls;if(!RM&&window.Lenis){ls=new Lenis({lerp:.1});ls.on('scroll',ScrollTrigger.update);gsap.ticker.add(t=>ls.raf(t*1000));gsap.ticker.lagSmoothing(0)}
+
+if(!RM){
+
+$$('.rv').forEach(e=>gsap.from(e,{y:50,opacity:0,duration:.9,ease:'power3.out',scrollTrigger:{trigger:e,start:'top 88%'}}));
+
+gsap.to('#trk',{x:()=>-($('#trk').scrollWidth-innerWidth),ease:'none',scrollTrigger:{trigger:'#hs',pin:true,scrub:1,start:'top top',end:()=>'+='+$('#trk').scrollWidth,invalidateOnRefresh:true}});
+
+gsap.timeline({scrollTrigger:{trigger:'body',start:'top top',end:'bottom bottom',scrub:1.5}}).to('#b1',{opacity:.15,x:'50vw',y:'60vh'},0).to('#b2',{opacity:1,x:'-40vw',y:'-50vh'},0).to('#b3',{x:'-30vw',y:'-20vh'},0)}
+
+/* ===== floating objects + frame loop ===== */
+
+const LY=[[.12,['cloud','cloud','bubble'],'120px',.6],[.3,['bubble','spark','daisy'],'56px',.85],[.55,['star','bow','bubble'],'44px',.9],[.85,['spark','heart','bubble'],'30px',1]],CC={cloud:'#fff',bubble:'',spark:'var(--a)',daisy:'',star:'#FFC8DD',bow:'var(--a)',heart:'var(--a)'};
+
+let H=1,LS=[],OB=[];const uh=()=>H=Math.max(1,document.documentElement.scrollHeight-innerHeight);ScrollTrigger.addEventListener('refresh',uh);addEventListener('resize',uh);
+
+function mk(){uh();LY.forEach(([s,ids,z,op])=>{const L=document.createElement('div');L.className='ly';L.style.opacity=op;document.body.append(L);LS.push({s,e:L});ids.forEach(id=>{const sz=parseFloat(z)*(.8+Math.random()*.5),o=document.createElement('div');o.className='ob';const x=3+Math.random()*88,t=Math.random()*(innerHeight+s*H);o.style.cssText=`left:${x}%;top:${t}px`;o.innerHTML=`<div class="fl" style="--d:${6+Math.random()*6}s;animation-delay:-${Math.random()*6}s">${S(id,CC[id],sz+'px')}</div>`;L.append(o);OB.push({e:o,s,x,t,z:sz,px:0,py:0})})})}
+
+let sy=scrollY,vel=0,mx=innerWidth/2,my=innerHeight/2,rx=mx,ry=my,lx=0,ly=0;
+
+addEventListener('pointermove',e=>{mx=e.clientX;my=e.clientY;if(fine&&!RM&&Math.hypot(mx-lx,my-ly)>22){lx=mx;ly=my;add(mx,my,{vx:Math.random()-.5,vy:-.4,g:.01,r:4+Math.random()*5,l:.9,k:[0,3,1][Math.random()*3|0]})}});
+
+const pf=$('#pf'),pm=$('#pm'),bp=$('#bp'),bf=$('#bf'),dot=$('#dot'),gw=$('#glow'),BL=bp.getTotalLength();bp.style.strokeDasharray=BL;
+
+gsap.ticker.add(()=>{const y=scrollY,p=Math.min(1,y/H);vel+=((y-sy)-vel)*.12;sy=y;const v=Math.max(-50,Math.min(50,vel));
+
+pf.style.transform=`scaleX(${p})`;pm.style.transform=`translateX(${p*innerWidth}px)`;bp.style.strokeDashoffset=BL*(1-p);
+
+const a=bp.getPointAtLength(BL*p),b=bp.getPointAtLength(Math.min(BL,BL*p+4));
+
+bf.style.transform=`translate3d(${a.x/1000*innerWidth-20}px,${a.y/1000*innerHeight-20}px,0) rotate(${Math.atan2((b.y-a.y)*innerHeight,(b.x-a.x)*innerWidth)*57.3+90}deg)`;
+
+if(!RM){$$('.sk').forEach(e=>e.style.transform=`skewY(${(-v*.1).toFixed(2)}deg)`);
+
+LS.forEach(l=>l.e.style.transform=`translate3d(0,${-l.s*y}px,0)`);
+
+OB.forEach(o=>{const dx=o.x*innerWidth/100+o.z/2-mx,dy=o.t-o.s*y+o.z/2-my,d=Math.hypot(dx,dy)||1,f=d<220?(220-d)/220*70:0;o.px+=(dx/d*f-o.px)*.08;o.py+=(dy/d*f-o.py)*.08;
+
+o.e.style.transform=`translate3d(${o.px+(mx-innerWidth/2)*o.s*.05}px,${o.py+(my-innerHeight/2)*o.s*.05}px,0) rotate(${v*o.s*.7}deg) scale(1,${1+Math.abs(v)*.006})`})}
+
+if(fine&&!RM){rx+=(mx-rx)*.16;ry+=(my-ry)*.16;dot.style.transform=`translate3d(${mx}px,${my}px,0)`;ring.style.transform=`translate3d(${rx}px,${ry}px,0)`;gw.style.transform=`translate3d(${rx}px,${ry}px,0)`}});
+
+/* ===== intro ===== */
+
+function go(){$('#ld').remove();if(RM)return;gsap.fromTo('.lt',{y:90,opacity:0,rotation:()=>gsap.utils.random(-25,25)},{y:0,opacity:1,rotation:0,duration:1.1,ease:'elastic.out(1,.55)',stagger:.07});gsap.from('.hh',{opacity:0,y:20,stagger:.15,delay:.5,duration:.9})}
+
+addEventListener('load',()=>{ScrollTrigger.refresh();mk();
+
+if(RM){go();return}gsap.set('.lt',{opacity:0});
+
+gsap.timeline().to('#lb',{scale:1.15,duration:.8,ease:'sine.inOut',yoyo:true,repeat:1}).to('#lb',{scale:1.6,opacity:0,duration:.25,onStart:()=>burst(innerWidth/2,innerHeight/2,22,{k:1,s:6,g:0,l:1})}).to('#ld',{opacity:0,duration:.4,onComplete:go},'-=.1')});
+
+document.fonts&&document.fonts.ready.then(()=>ScrollTrigger.refresh());
+
+
+</script></body></html>
